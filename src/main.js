@@ -6,11 +6,11 @@ import app3 from './components/app3'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  components: { App },
-  template: '<App/>'
-})
+// new Vue({
+//   el: '#app',
+//   components: { App },
+//   template: '<App/>'
+// })
 new Vue({
   el: '#app3',
   components: { app3 },

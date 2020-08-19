@@ -1,6 +1,11 @@
 <template>
   <div id="app3">
     <input type="text" v-model="keyword">
+    <div id="board" class="flex mt-2 px-1 col-3">
+      <div class="bg-secondary mx-2 rounded" v-for="item in filteredList" :key="item.o_tlc_agency_name">
+        <h2 class="px-3 py-1"><strong>{{item.o_tlc_agency_name}}</strong></h2> 
+      </div>
+    </div>
     <ul>
       <li v-for="item in filteredList" :key="item.o_tlc_agency_name">{{item.o_tlc_agency_name}}</li>
     </ul>
@@ -15,6 +20,7 @@ import axios from "axios";
 
 export default {
   name: "app3",
+  props: ["item"],
   components: {
     
   },
@@ -50,6 +56,7 @@ export default {
 </script>
 
 <style scoped>
+@import 'bootstrap';
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -58,4 +65,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>
