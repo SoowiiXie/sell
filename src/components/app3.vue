@@ -1,9 +1,15 @@
 <template>
   <div id="app3">
     <input type="text" v-model="keyword">
-    <div id="board" class="flex mt-2 px-1 col-3">
-      <div class="bg-secondary mx-2 rounded" v-for="item in filteredList" :key="item.o_tlc_agency_name">
-        <h2 class="px-3 py-1"><strong>{{item.o_tlc_agency_name}}</strong></h2> 
+    <div id="board" class="flex mt-2 px-1 col-6">
+      <div class="bg-secondary mx-2 rounded" v-for="school in filteredList" :key="school.o_tlc_agency_name">
+        <h2 class="px-3 py-1"><strong>{{school.o_tlc_agency_name}}</strong></h2>
+        <!-- <Card v-for="card in school.o_tlc_agency_address" :card="card" :key="card.nothing"></Card> -->
+        <Card :card="school.o_tlc_agency_address"></Card>
+        <div class="input-area mx-auto bg-danger py-2 rounded-lg">
+          <textarea class="content mx-2 rounded-lg" v-model="content"></textarea>
+          <button class="button mx-auto rounded-lg" @click="createCard">新增卡片</button>
+        </div>
       </div>
     </div>
     <ul>
@@ -15,19 +21,18 @@
 </template>
 
 <script>
-
+import Card from '.././components/card';
 import axios from "axios";
 
 export default {
   name: "app3",
-  props: ["item"],
-  components: {
-    
-  },
+  // props: ["item"],
+  components: { Card },
   data: function() {
     return {
       keyword: "",
-      list777: []
+      list777: [],
+      cotent: ""
     };
   },
   computed: {
@@ -40,6 +45,11 @@ export default {
   methods: {
     deleteLastItem() {
       this.list777.splice(this.list777.length - 1, 1);
+    },
+    createCard(event){
+      event.preventDefault();
+      console.log("{\"o_tlc_agency_name\" : \""+this.content+"\",\"o_tlc_agency_address\" : \""+this.content+"\"}");
+      this.list777.splice(0, 0,JSON.parse("{\"o_tlc_agency_name\" : \""+this.content+"\",\"o_tlc_agency_address\" : \""+this.content+"\"}"));
     }
   },
   mounted: function() {
@@ -57,13 +67,4 @@ export default {
 
 <style scoped>
 @import 'bootstrap';
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
 </style>
