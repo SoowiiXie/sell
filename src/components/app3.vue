@@ -6,9 +6,12 @@
         <h2 class="px-3 py-1"><strong>{{school.o_tlc_agency_name}}</strong></h2>
         <!-- <Card v-for="card in school.o_tlc_agency_address" :card="card" :key="card.nothing"></Card> -->
         <Card :card="school.o_tlc_agency_address"></Card>
+        
         <div class="input-area mx-auto bg-danger py-2 rounded-lg">
-          <textarea class="content mx-2 rounded-lg" v-model="content"></textarea>
-          <button class="button mx-auto rounded-lg" @click="createCard">新增卡片</button>
+          <button class="button mx-auto rounded-lg bg-success" v-if="!editing" @click="newCard">新增卡片</button>
+          <textarea class="content mx-2 rounded-lg" v-if="editing" v-model="content"></textarea>
+          <button class="button mx-auto rounded-lg" v-if="editing" @click="createCard">建立卡片</button>
+          <button class="button mx-auto rounded-lg" v-if="editing" @click="editing=false">取消</button>
         </div>
       </div>
     </div>
@@ -26,13 +29,14 @@ import axios from "axios";
 
 export default {
   name: "app3",
-  // props: ["item"],
-  components: { Card },
+  // props: ["item"],  //外面餵進來
+  components: { Card },//引用後註冊元件
   data: function() {
     return {
       keyword: "",
       list777: [],
-      cotent: ""
+      content: "",
+      editing: false
     };
   },
   computed: {
@@ -43,13 +47,17 @@ export default {
     }
   },
   methods: {
+    newCard(event){
+      event.preventDefault();
+      this.editing=true;
+    },
     deleteLastItem() {
       this.list777.splice(this.list777.length - 1, 1);
     },
     createCard(event){
       event.preventDefault();
-      console.log("{\"o_tlc_agency_name\" : \""+this.content+"\",\"o_tlc_agency_address\" : \""+this.content+"\"}");
       this.list777.splice(0, 0,JSON.parse("{\"o_tlc_agency_name\" : \""+this.content+"\",\"o_tlc_agency_address\" : \""+this.content+"\"}"));
+      this.editing=false;
     }
   },
   mounted: function() {
